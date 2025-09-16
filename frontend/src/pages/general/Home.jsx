@@ -53,7 +53,7 @@ const Home = () => {
 
   const handleClick = (e, id) => {
     e.preventDefault();
-    navigate(`/store/${id}`);
+    navigate(`/food-partner/${id}`);
   };
 
   if (!videos || videos.length === 0) {

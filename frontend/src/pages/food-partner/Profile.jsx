@@ -11,7 +11,7 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/food-partner/${id}`, {
+      .get(`http://localhost:3000/api/partner/food-partner/${id}`, {
         withCredentials: true,
       })
       .then((response) => {
@@ -28,17 +28,10 @@ const Profile = () => {
   return (
     <div className="profile-wrap">
       {/* Toggle button to show/hide raw response data */}
-      <div style={{ marginBottom: '20px' }}>
-        <button 
+      <div className="toolbar">
+        <button
           onClick={() => setShowRawData(!showRawData)}
-          style={{ 
-            padding: '8px 16px', 
-            backgroundColor: '#10b981', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
+          className="btn"
         >
           {showRawData ? 'Hide' : 'Show'} API Response Data
         </button>
@@ -46,21 +39,9 @@ const Profile = () => {
 
       {/* Display raw response data */}
       {showRawData && responseData && (
-        <div style={{ 
-          backgroundColor: '#f3f4f6', 
-          padding: '16px', 
-          borderRadius: '8px', 
-          marginBottom: '20px',
-          fontFamily: 'monospace',
-          fontSize: '14px',
-          maxHeight: '400px',
-          overflow: 'auto',
-          border: '1px solid #d1d5db'
-        }}>
-          <h3 style={{ margin: '0 0 12px 0', color: '#374151' }}>Raw API Response:</h3>
-          <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }}>
-            {JSON.stringify(responseData, null, 2)}
-          </pre>
+        <div className="api-box">
+          <h3 className="api-title">Raw API Response:</h3>
+          <pre className="api-pre">{JSON.stringify(responseData, null, 2)}</pre>
         </div>
       )}
 
