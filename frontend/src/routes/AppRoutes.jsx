@@ -1,5 +1,5 @@
 import React, { Profiler } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import UserRegister from '../pages/UserRegister'
 import UserLogin from '../pages/UserLogin'
 import FoodPartnerRegister from '../pages/FoodPartnerRegister'
@@ -16,7 +16,10 @@ const AppRoutes = () => {
       <Route path='/user/login' element={<UserLogin />} />
       <Route path='/food-partner/register' element={<FoodPartnerRegister />} />
       <Route path='/food-partner/login' element={<FoodPartnerLogin />} />
-      <Route path='/' element={<Home />} />
+      {/* Default entry goes to login */}
+      <Route path='/' element={<Navigate to="/user/login" replace />} />
+      {/* Explicit home route */}
+      <Route path='/home' element={<Home />} />
       <Route path='/create-food' element={<CreateFoodPartner />} />
       <Route path='/food-partner/:id' element={<Profile />} />
     </Routes>

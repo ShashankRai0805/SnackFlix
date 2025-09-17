@@ -12,17 +12,20 @@ const Home = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/food", {
-          withCredentials: true,
-        });
+        const res = await axios.get("http://localhost:3000/api/food", { withCredentials: true });
         setVideos(res.data.foodItems || []);
       } catch (err) {
         console.error("Error fetching videos:", err);
+        // If not authorized, send user to login
+        if (err?.response?.status === 401 || err?.response?.status === 403) {
+          navigate('/user/login');
+          return;
+        }
       }
     };
 
     fetchVideos();
-  }, []);
+  }, [navigate]);
 
   // Play only the video currently in view
   useEffect(() => {
@@ -61,7 +64,7 @@ const Home = () => {
       <div className="reels">
         <section className="reel" aria-busy="true" aria-live="polite">
           <div className="overlay">
-            <p className="description">Discover great food near you. Videos will appear here as they load.</p>
+            <p className="description">Discover great food near you. Videos will appear here as they load. If you don't see any videos, please <a href="/user/login" style={{color:'#fff', textDecoration:'underline'}}>login</a> first.</p>
           </div>
         </section>
       </div>
@@ -71,6 +74,7 @@ const Home = () => {
   return (
     <div className="reels">
       {videos.map((v, idx) => (
+        console.log(v),
         <section className="reel" key={v._id}>
           <video
             ref={(el) => (videoRefs.current[idx] = el)} // store reference
@@ -85,7 +89,7 @@ const Home = () => {
             <p className="description">{v.description}</p>
             <button
               className="visit-btn"
-              onClick={(e) => handleClick(e, v._id)}
+              onClick={(e) => handleClick(e, v.foodPartner)}
             >
               Visit store
             </button>

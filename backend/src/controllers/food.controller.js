@@ -5,16 +5,19 @@ const { v4: uuid } = require("uuid");
 async function createFood(req, res) {
     const fileUploadResult = await storageService.uploadFile(req.file.buffer, uuid())
     console.log(fileUploadResult);
+    console.log(req.foodPartner);
 
     const foodItem = await foodModel.create({
         name: req.body.name,
         description: req.body.description,
-        video: fileUploadResult.url
+        video: fileUploadResult.url,
+        foodPartner: req.foodPartner._id
     })
 
     res.status(201).json({
         msg: "Food item created successfully",
-        foodItem: foodItem
+        foodItem: foodItem,
+        foodPartnerId: req.foodPartner._id
     })
 
 }

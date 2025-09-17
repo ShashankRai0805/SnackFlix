@@ -22,7 +22,7 @@ const UserLogin = () => {
 
     console.log(response.data);
 
-    navigate("/");
+    navigate("/home");
   }
   return (
     <div className="auth-wrap">

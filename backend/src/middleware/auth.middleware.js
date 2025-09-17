@@ -1,4 +1,4 @@
-const foodPartnerModel = require("../models/fooditem.model");
+const foodPartnerModel = require("../models/foodpartner.model");
 const userModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 
@@ -14,7 +14,10 @@ async function authFoodPartnerMiddleware(req, res, next) {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        foodPartner = await foodPartnerModel.findById(decoded.id);
+        const foodPartner = await foodPartnerModel.findById(decoded.id);
+        if (!foodPartner) {
+            return res.status(401).json({ msg: "Invalid token" });
+        }
         req.foodPartner = foodPartner;
         next();
     } catch (error) {
@@ -36,7 +39,10 @@ async function authUserMiddleware(req, res, next) {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        user = await userModel.findById(decoded.id);
+        const user = await userModel.findById(decoded.id);
+        if (!user) {
+            return res.status(401).json({ msg: "Invalid token" });
+        }
         req.user = user;
         next();
     } catch (error) {
