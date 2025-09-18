@@ -1,3 +1,4 @@
+const foodModel = require("../models/fooditem.model");
 const foodPartnerModel = require("../models/foodpartner.model");
 
 async function getAllFoodPartnerById(req, res) {
@@ -5,6 +6,7 @@ async function getAllFoodPartnerById(req, res) {
     console.log(foodPartnerId);
 
     const foodPartner = await foodPartnerModel.findById(foodPartnerId);
+    const foodItemsByFoodPartner = await foodModel.find({ foodPartner: foodPartnerId });
 
     if (!foodPartner) {
         return res.status(404).json({
@@ -14,7 +16,10 @@ async function getAllFoodPartnerById(req, res) {
     
     res.status(200).json({
         msg: "Food Partner fetched successfully",
-        foodPartner
+        foodPartner: {
+            ...foodPartner.toObject(),
+            foodItems: foodItemsByFoodPartner
+        }
     })
 }
 

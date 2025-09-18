@@ -13,8 +13,8 @@ const foodSchema = new mongoose.Schema({
         type: String
     },
     foodPartner: {
-        ref: "foodpartner",
         type: mongoose.Schema.Types.ObjectId,
+        ref: "foodpartner",
     }
 })
 

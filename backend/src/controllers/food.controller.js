@@ -17,7 +17,6 @@ async function createFood(req, res) {
     res.status(201).json({
         msg: "Food item created successfully",
         foodItem: foodItem,
-        foodPartnerId: req.foodPartner._id
     })
 
 }

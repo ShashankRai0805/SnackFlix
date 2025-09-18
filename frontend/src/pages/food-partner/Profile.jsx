@@ -10,8 +10,7 @@ const Profile = () => {
   const [showRawData, setShowRawData] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/api/partner/food-partner/${id}`, {
+      axios.get(`http://localhost:3000/api/partner/${id}`, {
         withCredentials: true,
       })
       .then((response) => {

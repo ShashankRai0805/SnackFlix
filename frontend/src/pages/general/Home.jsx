@@ -56,6 +56,7 @@ const Home = () => {
 
   const handleClick = (e, id) => {
     e.preventDefault();
+    console.log("Navigating to profile for ID:", id);
     navigate(`/food-partner/${id}`);
   };
 
@@ -89,7 +90,8 @@ const Home = () => {
             <p className="description">{v.description}</p>
             <button
               className="visit-btn"
-              onClick={(e) => handleClick(e, v.foodPartner)}
+              onClick={(e) => handleClick(e, v.foodPartner?._id || v.foodPartner)}
+              disabled={!v.foodPartner}
             >
               Visit store
             </button>
